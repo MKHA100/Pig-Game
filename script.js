@@ -5,11 +5,6 @@ let activePlayer = 0;
 let currentScore = 0;
 
 const dice = document.querySelector(".dice");
-const currentPlayer = document.getElementById(`current--${activePlayer}`);
-const scoreId = document.getElementById(`score--${activePlayer}`);
-const activeTernary = document.getElementById(
-  `player${activePlayer === 0 ? 1 : 0}`
-);
 
 const game = function () {
   dice.removeAttribute("hidden", "");
@@ -21,19 +16,23 @@ const game = function () {
     document
       .getElementById(`player${activePlayer}`)
       .classList.remove("player--active");
-    activeTernary.classList.add("player--active");
-    currentPlayer.textContent = 0;
+    document
+      .getElementById(`player${activePlayer === 0 ? 1 : 0}`)
+      .classList.add("player--active");
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
     activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
     currentScore = 0;
   } else {
     currentScore += randomNumber;
-    currentPlayer.textContent = currentScore;
+    document.getElementById(`current--${activePlayer}`).textContent =
+      currentScore;
   }
 
   if (currentScore + score[activePlayer] >= 50) {
     document.querySelector("body").style.cssText =
       "background-image: linear-gradient(to top left, #28b487, #7dd56f);";
-    scoreId.textContent = score[activePlayer] + currentScore;
+    document.getElementById(`score--${activePlayer}`).textContent =
+      score[activePlayer] + currentScore;
     document.querySelector(".main").classList.add("dissable");
     document.querySelector(".winner").innerHTML = `Player ${
       activePlayer === 0 ? 1 : 2
@@ -47,10 +46,13 @@ document.querySelector(".btn--hold").addEventListener("click", function () {
   document
     .getElementById(`player${activePlayer}`)
     .classList.remove("player--active");
-  activeTernary.classList.add("player--active");
+  document
+    .getElementById(`player${activePlayer === 0 ? 1 : 0}`)
+    .classList.add("player--active");
   score[activePlayer] += currentScore;
-  scoreId.textContent = score[activePlayer];
-  currentPlayer.textContent = 0;
+  document.getElementById(`score--${activePlayer}`).textContent =
+    score[activePlayer];
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
   activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
   currentScore = 0;
 
